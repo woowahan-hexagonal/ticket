@@ -1,5 +1,7 @@
 package com.jummi.ticket.performance.converter;
 
+import com.jummi.ticket.performance.adapter.persistence.PerformanceEntity;
+import com.jummi.ticket.performance.adapter.persistence.SeriesEntity;
 import com.jummi.ticket.performance.application.port.in.RegisterPerformanceRequest;
 import com.jummi.ticket.performance.application.port.in.SeriesRequest;
 import com.jummi.ticket.performance.domain.*;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 @Component
 @Mapper
 public interface PerformanceMapper {
+    PerformanceEntity convertDomainEntityToJpaEntity(Performance performance);
+
     default Performance convertRequestToDomainEntity(RegisterPerformanceRequest request) {
         return Performance.builder()
                 .title(request.getTitle())
@@ -32,6 +36,8 @@ public interface PerformanceMapper {
                 .map(ReservationSite::valueOf)
                 .collect(Collectors.toList());
     }
+
+    SeriesEntity convertDomainEntityToJpaEntity(Series series);
 
     default List<Series> extractSeriesDomainEntity(RegisterPerformanceRequest request) {
         return request.getSeries()
