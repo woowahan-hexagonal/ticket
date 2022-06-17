@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -26,9 +25,7 @@ class PerformanceAdapter implements SavePerformanceCommand {
         PerformanceEntity saved = performanceRepository.save(performanceEntity);
         Long performanceId = saved.getPerformanceId();
 
-        List<SeriesEntity> seriesEntities = series.stream()
-                .map(mapper::convertDomainEntityToJpaEntity)
-                .collect(Collectors.toList());
+        List<SeriesEntity> seriesEntities = mapper.convertDomainEntityToJpaEntity(series);
         seriesEntities.forEach(seriesEntity -> seriesEntity.setPerformanceId(performanceId));
         seriesRepository.saveAll(seriesEntities);
 

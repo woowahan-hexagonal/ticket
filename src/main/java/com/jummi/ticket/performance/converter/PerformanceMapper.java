@@ -6,10 +6,9 @@ import com.jummi.ticket.performance.adapter.web.RegisterPerformanceRequest;
 import com.jummi.ticket.performance.adapter.web.SeriesRequest;
 import com.jummi.ticket.performance.domain.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public interface PerformanceMapper {
                 .collect(Collectors.toList());
     }
 
-    SeriesEntity convertDomainEntityToJpaEntity(Series series);
+    List<SeriesEntity> convertDomainEntityToJpaEntity(List<Series> series);
 
     default List<Series> extractSeriesDomainEntity(RegisterPerformanceRequest request) {
         return request.getSeries()
@@ -46,13 +45,8 @@ public interface PerformanceMapper {
                 .collect(Collectors.toList());
     }
 
-    default Series convertRequestToDomainEntity(SeriesRequest seriesRequest) {
-        LocalDate date = seriesRequest.getDateTime().toLocalDate();
-        LocalTime time = seriesRequest.getDateTime().toLocalTime();
-        return Series.builder()
-                .playDate(date)
-                .playTime(time)
-                .isPerformed(seriesRequest.isPerformed())
-                .build();
-    }
+    @Mapping(expression = "java(seriesRequest.getDateTime().toLocalDate())", target = "playDate")
+    @Mapping(expression = "java(seriesRequest.getDateTime().toLocalTime())", target = "playTime")
+    @Mapping(expression = "java(seriesRequest.isPerformed())", target = "isPerformed")
+    Series convertRequestToDomainEntity(SeriesRequest seriesRequest);
 }
