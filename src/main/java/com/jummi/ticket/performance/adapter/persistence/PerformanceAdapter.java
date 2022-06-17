@@ -1,6 +1,6 @@
 package com.jummi.ticket.performance.adapter.persistence;
 
-import com.jummi.ticket.performance.application.port.out.SavePerformancePort;
+import com.jummi.ticket.performance.application.port.out.SavePerformanceCommand;
 import com.jummi.ticket.performance.converter.PerformanceMapper;
 import com.jummi.ticket.performance.domain.Performance;
 import com.jummi.ticket.performance.domain.Series;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Repository
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-class PerformanceAdapter implements SavePerformancePort {
+class PerformanceAdapter implements SavePerformanceCommand {
     private final PerformanceMapper mapper;
     private final PerformanceRepository performanceRepository;
     private final SeriesRepository seriesRepository;

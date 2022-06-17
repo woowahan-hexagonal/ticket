@@ -5,6 +5,6 @@ import com.jummi.ticket.performance.domain.Series;
 
 import java.util.List;
 
-public interface SavePerformancePort {
+public interface SavePerformanceCommand {
     Long savePerformance(Performance performance, List<Series> series);
 }
