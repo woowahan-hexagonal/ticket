@@ -5,13 +5,13 @@ import com.jummi.ticket.performance.converter.PerformanceMapper;
 import com.jummi.ticket.performance.domain.Performance;
 import com.jummi.ticket.performance.domain.Series;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 class PerformanceAdapter implements SavePerformancePort {
