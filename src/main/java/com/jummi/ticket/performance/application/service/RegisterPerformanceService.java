@@ -1,7 +1,7 @@
 package com.jummi.ticket.performance.application.service;
 
+import com.jummi.ticket.performance.adapter.web.RegisterPerformanceRequest;
 import com.jummi.ticket.performance.application.port.in.RegisterPerformanceCommand;
-import com.jummi.ticket.performance.application.port.in.RegisterPerformanceRequest;
 import com.jummi.ticket.performance.application.port.out.SavePerformancePort;
 import com.jummi.ticket.performance.converter.PerformanceMapper;
 import com.jummi.ticket.performance.domain.Performance;

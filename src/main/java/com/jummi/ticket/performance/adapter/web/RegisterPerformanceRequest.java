@@ -1,4 +1,4 @@
-package com.jummi.ticket.performance.application.port.in;
+package com.jummi.ticket.performance.adapter.web;
 
 import lombok.Builder;
 import lombok.Getter;
