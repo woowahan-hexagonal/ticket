@@ -3,21 +3,18 @@ package com.jummi.ticket.performance.adapter.persistence;
 import com.jummi.ticket.common.adapter.persistence.BaseEntity;
 import com.jummi.ticket.performance.domain.Genre;
 import com.jummi.ticket.performance.domain.ReservationSite;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Getter
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "performance")
 @Where(clause = "is_deleted = false")
@@ -40,7 +37,7 @@ public class PerformanceEntity extends BaseEntity {
     private String venue;
 
     @OneToMany(mappedBy = "performance", cascade = CascadeType.REMOVE)
-    private List<SeriesEntity> series = new ArrayList<>();
+    private List<SeriesEntity> series;
 
     private int runTime;
 

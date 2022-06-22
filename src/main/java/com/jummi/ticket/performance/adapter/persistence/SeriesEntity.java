@@ -8,11 +8,11 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "series")
 @Where(clause = "is_deleted = false")
@@ -32,7 +32,7 @@ public class SeriesEntity extends BaseEntity {
 
     @ElementCollection
     @Column(name = "casts")
-    private List<String> casts = new ArrayList<>();
+    private List<String> casts;
 
     private boolean isPerformed;
 }
