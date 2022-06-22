@@ -8,6 +8,8 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -27,6 +29,10 @@ public class SeriesEntity extends BaseEntity {
     private LocalDate playDate;
 
     private LocalTime playTime;
+
+    @ElementCollection
+    @Column(name = "casts")
+    private List<String> casts = new ArrayList<>();
 
     private boolean isPerformed;
 }

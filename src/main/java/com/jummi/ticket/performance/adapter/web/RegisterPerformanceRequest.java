@@ -35,9 +35,6 @@ public class RegisterPerformanceRequest {
     @NotNull
     private final List<SeriesRequest> series;
 
-    @NotBlank
-    private final List<String> casts;
-
     @Positive
     private final int runTime;
 

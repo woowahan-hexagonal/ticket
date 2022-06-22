@@ -42,10 +42,6 @@ public class PerformanceEntity extends BaseEntity {
     @OneToMany(mappedBy = "performance", cascade = CascadeType.REMOVE)
     private List<SeriesEntity> series = new ArrayList<>();
 
-    @ElementCollection
-    @Column(name = "casts")
-    private List<String> casts = new ArrayList<>();
-
     private int runTime;
 
     private int minAvailableAge;
