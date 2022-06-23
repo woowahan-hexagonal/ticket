@@ -1,6 +1,5 @@
 package com.jummi.ticket.performance.converter;
 
-import com.jummi.ticket.common.converter.Converters;
 import com.jummi.ticket.performance.adapter.persistence.PerformanceEntity;
 import com.jummi.ticket.performance.adapter.persistence.SeriesEntity;
 import com.jummi.ticket.performance.adapter.web.RegisterPerformanceRequest;
@@ -10,6 +9,7 @@ import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PerformanceMapperTest {
 
-    private final PerformanceMapper mapper = Converters.PERFORMANCE_MAPPER;
+    private final PerformanceMapper mapper = Mappers.getMapper(PerformanceMapper.class);
 
     private List<LocalDate> playDates;
     private List<LocalTime> playTimes;
