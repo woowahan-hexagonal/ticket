@@ -24,7 +24,9 @@ public class SeriesEntity extends BaseEntity {
     private Long seriesId;
 
     @Setter
-    private Long performanceId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "performance_id")
+    private PerformanceEntity performance;
 
     private LocalDate playDate;
 

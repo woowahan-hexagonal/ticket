@@ -9,7 +9,6 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,9 +34,6 @@ public class PerformanceEntity extends BaseEntity {
     private LocalDate endDate;
 
     private String venue;
-
-    @OneToMany(mappedBy = "performance", cascade = CascadeType.REMOVE)
-    private List<SeriesEntity> series;
 
     private int runTime;
 

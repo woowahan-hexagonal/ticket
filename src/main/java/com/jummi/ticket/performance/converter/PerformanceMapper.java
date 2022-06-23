@@ -55,5 +55,13 @@ public interface PerformanceMapper {
                 .build();
     }
 
-    List<SeriesEntity> convertDomainEntityToJpaEntity(List<Series> series);
+    @Mapping(source = "performanceEntity", target = "performance")
+    default List<SeriesEntity> convertDomainEntitiesToJpaEntities(List<Series> series, PerformanceEntity performanceEntity) {
+        return series.stream()
+                .map(s -> convertDomainEntityToJpaEntity(s, performanceEntity))
+                .collect(Collectors.toList());
+    }
+
+    @Mapping(source = "performanceEntity", target = "performance")
+    SeriesEntity convertDomainEntityToJpaEntity(Series series, PerformanceEntity performanceEntity);
 }

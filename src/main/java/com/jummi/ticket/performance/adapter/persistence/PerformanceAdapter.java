@@ -23,12 +23,10 @@ class PerformanceAdapter implements SavePerformanceCommand {
     public Long savePerformance(Performance performance, List<Series> series) {
         PerformanceEntity performanceEntity = mapper.convertDomainEntityToJpaEntity(performance);
         PerformanceEntity saved = performanceRepository.save(performanceEntity);
-        Long performanceId = saved.getPerformanceId();
 
-        List<SeriesEntity> seriesEntities = mapper.convertDomainEntityToJpaEntity(series);
-        seriesEntities.forEach(seriesEntity -> seriesEntity.setPerformanceId(performanceId));
+        List<SeriesEntity> seriesEntities = mapper.convertDomainEntitiesToJpaEntities(series, saved);
         seriesRepository.saveAll(seriesEntities);
 
-        return performanceId;
+        return saved.getPerformanceId();
     }
 }

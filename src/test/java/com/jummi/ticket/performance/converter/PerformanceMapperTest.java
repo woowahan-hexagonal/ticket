@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PerformanceMapperTest {
 
-    private final PerformanceMapper mapper = Mappers.getMapper(PerformanceMapper.class);
+    private PerformanceMapper mapper = Mappers.getMapper(PerformanceMapper.class);
 
     private List<LocalDate> playDates;
     private List<LocalTime> playTimes;
@@ -95,10 +95,12 @@ class PerformanceMapperTest {
     }
 
     @Test
-    @DisplayName("convert series domain entity to series jpa entity")
-    void convertSeriesDomainEntityToJpaEntity() {
+    @DisplayName("convert series domain entities to series jpa entities")
+    void convertSeriesDomainEntitiesToJpaEntities() {
         List<Series> series = createSeries();
-        List<SeriesEntity> seriesEntities = mapper.convertDomainEntityToJpaEntity(series);
+        Performance performance = createPerformance(1L);
+        PerformanceEntity performanceEntity = mapper.convertDomainEntityToJpaEntity(performance);
+        List<SeriesEntity> seriesEntities = mapper.convertDomainEntitiesToJpaEntities(series, performanceEntity);
 
         assertAll(
                 () -> assertThat(seriesEntities).hasSize(3),
@@ -108,8 +110,10 @@ class PerformanceMapperTest {
                                 Tuple.tuple(playDates.get(2), playTimes.get(1), casts.get(2), false),
                                 Tuple.tuple(playDates.get(0), playTimes.get(0), casts.get(0), true)
                         ),
-                () -> assertThat(seriesEntities).extracting("seriesId", "performanceId")
-                        .contains(Tuple.tuple(null, null))
+                () -> assertThat(seriesEntities).extracting("seriesId")
+                        .containsNull(),
+                () -> assertThat(seriesEntities).extracting("performance")
+                        .contains(performanceEntity)
         );
     }
 
