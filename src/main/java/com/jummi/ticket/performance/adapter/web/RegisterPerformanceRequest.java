@@ -1,4 +1,4 @@
-package com.jummi.ticket.performance.application.port.in;
+package com.jummi.ticket.performance.adapter.web;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -34,9 +34,6 @@ public class RegisterPerformanceRequest {
 
     @NotNull
     private final List<SeriesRequest> series;
-
-    @NotBlank
-    private final List<String> casts;
 
     @Positive
     private final int runTime;

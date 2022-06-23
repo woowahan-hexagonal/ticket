@@ -2,20 +2,21 @@ package com.jummi.ticket.performance.converter;
 
 import com.jummi.ticket.performance.adapter.persistence.PerformanceEntity;
 import com.jummi.ticket.performance.adapter.persistence.SeriesEntity;
-import com.jummi.ticket.performance.application.port.in.RegisterPerformanceRequest;
-import com.jummi.ticket.performance.application.port.in.SeriesRequest;
+import com.jummi.ticket.performance.adapter.web.RegisterPerformanceRequest;
+import com.jummi.ticket.performance.adapter.web.SeriesRequest;
 import com.jummi.ticket.performance.domain.*;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapping;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PerformanceMapper {
+
+    @Mapping(expression = "java(performance.getPerformanceId())", target = "performanceId")
+    @Mapping(expression = "java(performance.getPeriod().startDate())", target = "startDate")
+    @Mapping(expression = "java(performance.getPeriod().endDate())", target = "endDate")
     PerformanceEntity convertDomainEntityToJpaEntity(Performance performance);
 
     default Performance convertRequestToDomainEntity(RegisterPerformanceRequest request) {
@@ -24,20 +25,17 @@ public interface PerformanceMapper {
                 .genre(Genre.valueOf(request.getGenre()))
                 .period(new Period(request.getStartDate(), request.getEndDate()))
                 .venue(request.getVenue())
-                .casts(request.getCasts())
                 .runTime(request.getRunTime())
                 .minAvailableAge(request.getMinAvailableAge())
                 .reservationSites(convertStringToEnum(request.getReservationSites()))
                 .build();
     }
 
-    default List<ReservationSite> convertStringToEnum(List<String> reservationSites) {
+    private List<ReservationSite> convertStringToEnum(List<String> reservationSites) {
         return reservationSites.stream()
                 .map(ReservationSite::valueOf)
                 .collect(Collectors.toList());
     }
-
-    SeriesEntity convertDomainEntityToJpaEntity(Series series);
 
     default List<Series> extractSeriesDomainEntity(RegisterPerformanceRequest request) {
         return request.getSeries()
@@ -46,13 +44,22 @@ public interface PerformanceMapper {
                 .collect(Collectors.toList());
     }
 
-    default Series convertRequestToDomainEntity(SeriesRequest seriesRequest) {
-        LocalDate date = seriesRequest.getDateTime().toLocalDate();
-        LocalTime time = seriesRequest.getDateTime().toLocalTime();
+    private Series convertRequestToDomainEntity(SeriesRequest seriesRequest) {
         return Series.builder()
-                .playDate(date)
-                .playTime(time)
+                .playDate(seriesRequest.getDateTime().toLocalDate())
+                .playTime(seriesRequest.getDateTime().toLocalTime())
+                .casts(seriesRequest.getCasts())
                 .isPerformed(seriesRequest.isPerformed())
                 .build();
     }
+
+    @Mapping(source = "performanceEntity", target = "performance")
+    default List<SeriesEntity> convertDomainEntitiesToJpaEntities(List<Series> series, PerformanceEntity performanceEntity) {
+        return series.stream()
+                .map(s -> convertDomainEntityToJpaEntity(s, performanceEntity))
+                .collect(Collectors.toList());
+    }
+
+    @Mapping(source = "performanceEntity", target = "performance")
+    SeriesEntity convertDomainEntityToJpaEntity(Series series, PerformanceEntity performanceEntity);
 }
