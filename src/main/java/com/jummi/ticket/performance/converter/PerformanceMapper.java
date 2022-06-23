@@ -7,13 +7,11 @@ import com.jummi.ticket.performance.adapter.web.SeriesRequest;
 import com.jummi.ticket.performance.domain.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PerformanceMapper {
 
     @Mapping(expression = "java(performance.getPerformanceId())", target = "performanceId")
