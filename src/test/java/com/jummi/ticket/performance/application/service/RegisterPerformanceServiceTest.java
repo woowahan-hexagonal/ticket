@@ -4,7 +4,6 @@ import com.jummi.ticket.performance.adapter.web.RegisterPerformanceRequest;
 import com.jummi.ticket.performance.application.port.out.SavePerformanceCommand;
 import com.jummi.ticket.performance.converter.PerformanceMapper;
 import com.jummi.ticket.performance.domain.Performance;
-import com.jummi.ticket.performance.domain.PerformanceId;
 import com.jummi.ticket.performance.domain.Series;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,9 +46,9 @@ class RegisterPerformanceServiceTest {
         given(savePerformanceCommand.savePerformance(performance, series))
                 .willReturn(anyLong());
 
-        PerformanceId performanceId = registerPerformanceService.registerPerformance(request);
+        Long performanceId = registerPerformanceService.registerPerformance(request);
 
-        assertThat(performanceId.id()).isNotNull();
+        assertThat(performanceId).isNotNull();
         verify(performanceMapper, times(1))
                 .convertRequestToDomainEntity(request);
         verify(performanceMapper, times(1))

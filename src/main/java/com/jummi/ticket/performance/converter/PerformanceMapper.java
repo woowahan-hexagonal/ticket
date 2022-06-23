@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Mapper
 public interface PerformanceMapper {
 
-    @Mapping(expression = "java(performance.getPerformanceId().id())", target = "performanceId")
+    @Mapping(expression = "java(performance.getPerformanceId())", target = "performanceId")
     @Mapping(expression = "java(performance.getPeriod().startDate())", target = "startDate")
     @Mapping(expression = "java(performance.getPeriod().endDate())", target = "endDate")
     PerformanceEntity convertDomainEntityToJpaEntity(Performance performance);

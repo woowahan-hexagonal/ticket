@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Performance {
-    private PerformanceId performanceId;
+    private Long performanceId;
     private String title;
     private Genre genre;
     private Period period;

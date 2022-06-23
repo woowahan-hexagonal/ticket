@@ -1,7 +1,6 @@
 package com.jummi.ticket.performance.adapter.web;
 
 import com.jummi.ticket.performance.application.port.in.RegisterPerformanceUseCase;
-import com.jummi.ticket.performance.domain.PerformanceId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +19,10 @@ class RegisterPerformanceController {
 
     @PostMapping
     ResponseEntity<Void> registerPerformance(@RequestBody @Valid RegisterPerformanceRequest request) {
-        PerformanceId performanceId = registerPerformanceUseCase.registerPerformance(request);
+        Long performanceId = registerPerformanceUseCase.registerPerformance(request);
 
         return ResponseEntity.created(
-                        URI.create("/api/performances/" + performanceId.id()))
+                        URI.create("/api/performances/" + performanceId))
                 .build();
     }
 }

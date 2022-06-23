@@ -41,12 +41,10 @@ class PerformanceMapperTest {
     @Test
     @DisplayName("convert performance domain entity to performance jpa entity")
     void convertPerformanceDomainEntityToJpaEntity() {
-        Long performanceId = 1L;
-        Performance performance = createPerformance(performanceId);
+        Performance performance = createPerformance();
         PerformanceEntity performanceEntity = mapper.convertDomainEntityToJpaEntity(performance);
 
         assertAll(
-                () -> assertThat(performanceEntity.getPerformanceId().longValue()).isEqualTo(performanceId),
                 () -> assertThat(performanceEntity.getTitle()).isEqualTo("BML"),
                 () -> assertThat(performanceEntity.getGenre()).isEqualTo(Genre.CONCERT),
                 () -> assertThat(performanceEntity.getStartDate()).isEqualTo("2022-05-13"),
@@ -98,7 +96,7 @@ class PerformanceMapperTest {
     @DisplayName("convert series domain entities to series jpa entities")
     void convertSeriesDomainEntitiesToJpaEntities() {
         List<Series> series = createSeries();
-        Performance performance = createPerformance(1L);
+        Performance performance = createPerformance();
         PerformanceEntity performanceEntity = mapper.convertDomainEntityToJpaEntity(performance);
         List<SeriesEntity> seriesEntities = mapper.convertDomainEntitiesToJpaEntities(series, performanceEntity);
 
@@ -117,9 +115,8 @@ class PerformanceMapperTest {
         );
     }
 
-    private Performance createPerformance(Long performanceId) {
+    private Performance createPerformance() {
         return Performance.builder()
-                .performanceId(new PerformanceId(performanceId))
                 .title("BML")
                 .genre(Genre.CONCERT)
                 .period(new Period(LocalDate.of(2022, 5, 13), LocalDate.of(2022, 5, 15)))
